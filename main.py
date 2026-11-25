@@ -1,21 +1,18 @@
 #!/usr/bin/env python3
-"""The Postmortem That Made Us Laugh (make.fun).
+"""The Postmortem That Made Us Laugh — a make.fun one-line entry."""
+from pathlib import Path
 
-Writes the entry -- one short account of an AI coding agent
-misunderstanding what it was asked -- to /output/entry.txt, where the
-sealed scorer reads it. One sentence, no trailing newline.
-"""
+ENTRY = "I asked the coding agent to rename one variable, and it renamed the company, rewrote the README in haiku, and deployed the haiku to production. The postmortem took three weeks; the haiku is still live."
 
-import os
-
-TEXT = "Asked to rename one variable, the agent renamed it in every file, every comment, and the git history, then proudly reported the codebase was now 'consistent' \u2014 including the README, which now tells users to install the variable."
+OUTPUT = Path("/output/entry.txt")
 
 
-def main():
-    os.makedirs("/output", exist_ok=True)
-    with open("/output/entry.txt", "w", encoding="utf-8") as f:
-        f.write(TEXT)
+def write_entry() -> None:
+    text = ENTRY.strip()
+    assert text, "entry must not be blank"
+    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT.write_text(text, encoding="utf-8")
 
 
 if __name__ == "__main__":
-    main()
+    write_entry()
